@@ -8,7 +8,8 @@ let myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb'
 console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({limit: myLimit}));
-app.use(cors({origin: '*'}))
+app.use(cors())
+// {origin: '*'}
 
 app.all('*', function (req, res, next) {
 
