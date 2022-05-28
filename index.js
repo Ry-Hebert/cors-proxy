@@ -1,4 +1,4 @@
-let express = require('express'),
+const express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
     app = express(),
@@ -13,9 +13,9 @@ app.use(cors({origin: '*'}))
 app.all('*', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
-    // res.header.add("Access-Control-Allow-Origin", "*");
-    // res.header.add("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-    // res.header.add("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
+    res.set("Access-Control-Allow-Origin", "*");
+    res.set("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+    res.set("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
 
     if (req.method === 'OPTIONS') {
         // CORS Preflight
