@@ -1,12 +1,14 @@
-var express = require('express'),
+let express = require('express'),
     request = require('request'),
     bodyParser = require('body-parser'),
-    app = express();
+    app = express(),
+    cors = require('cors')
 
-var myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
+let myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({limit: myLimit}));
+app.use(cors({origin: '*'}))
 
 app.all('*', function (req, res, next) {
 
@@ -19,7 +21,7 @@ app.all('*', function (req, res, next) {
         // CORS Preflight
         res.send();
     } else {
-        var targetURL = req.header('Target-URL'); // Target-URL ie. https://example.com or http://example.com
+        let targetURL = req.header('Target-URL'); // Target-URL ie. https://example.com or http://example.com
         if (!targetURL) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
