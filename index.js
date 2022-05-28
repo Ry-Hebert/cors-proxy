@@ -8,15 +8,14 @@ let myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb'
 console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({limit: myLimit}));
-app.use(cors())
-// {origin: '*'}
+app.use(cors({origin: '*'}))
 
 app.all('*', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
-    res.header.add("Access-Control-Allow-Origin", "*");
-    res.header.add("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
-    res.header.add("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
+    // res.header.add("Access-Control-Allow-Origin", "*");
+    // res.header.add("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
+    // res.header.add("Access-Control-Allow-Headers", req.header('access-control-request-headers'));
 
     if (req.method === 'OPTIONS') {
         // CORS Preflight
