@@ -19,7 +19,7 @@ app.all('*', function (req, res, next) {
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
     res.header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE");
     res.header("Access-Control-Allow-Headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept');
-    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000/Home, https://dev-support-dashboard.netlify.app/, *");
     res.header('Access-Control-Allow-Credentials', 'true')
 
     if (req.method === 'OPTIONS') {
