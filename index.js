@@ -1,27 +1,27 @@
 const express = require('express')
 const request = require('request')
 const bodyParser = require('body-parser')
-// const cors = require('cors')
+const cors = require('cors')
 const app = express()
 
 let myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
 console.log('Using limit: ', myLimit);
 
 app.use(bodyParser.json({limit: myLimit}));
-// app.use(cors({
-//     origin: '*',
-//     methods: ['GET', 'PUT', 'PATCH',  'POST', 'DELETE'],
-//     credentials: true,
-// }))
+app.use(cors({
+    origin: '*',
+    methods: ['GET', 'PUT', 'PATCH',  'POST', 'DELETE'],
+    credentials: true,
+}))
 
 app.all('*', function (req, res, next) {
 
-    // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
-    res.header("access-control-allow-methods", "GET, PUT, PATCH, POST, DELETE");
-    res.header("access-control-allow-headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept');
-    // res.header("access-control-allow-origin", "http://localhost:3000/Home, https://dev-support-dashboard.netlify.app/, *")
-    res.header("access-control-allow-origin",  "*");
-    res.header('access-control-allow-credentials', 'true')
+    // // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
+    // res.header("access-control-allow-methods", "GET, PUT, PATCH, POST, DELETE");
+    // res.header("access-control-allow-headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept');
+    // // res.header("access-control-allow-origin", "http://localhost:3000/Home, https://dev-support-dashboard.netlify.app/, *")
+    // res.header("access-control-allow-origin",  "*");
+    // res.header('access-control-allow-credentials', 'true')
 
     if (req.method === 'OPTIONS') {
         // CORS Preflight
