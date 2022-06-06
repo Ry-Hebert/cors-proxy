@@ -1,7 +1,7 @@
-const express = require('express')
-const request = require('request')
-const bodyParser = require('body-parser')
-// const cors = require('cors')
+import express from 'express'
+import fetch from 'node-fetch'
+import bodyParser from 'body-parser'
+
 const app = express()
 
 let myLimit = typeof(process.argv[2]) != 'undefined' ? process.argv[2] : '100kb';
@@ -19,9 +19,14 @@ app.all('*', function (req, res, next) {
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
     res.header("access-control-allow-methods", "GET, PUT, PATCH, POST, DELETE");
     res.header("access-control-allow-headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept');
-    // res.header("access-control-allow-origin", "http://localhost:3000/Home, https://dev-support-dashboard.netlify.app/, *")
-    res.header("access-control-allow-origin", "http://localhost:3000/, https://dev-support-dashboard.netlify.app/, *");
+    res.header("access-control-allow-origin", "*");
     res.header('access-control-allow-credentials', 'true')
+    res.header("access-control-allow-headers", 'Target-URL, access-control-allow-headers, access-control-request-headers');
+
+    // res.setHeader("Access-Control-Allow-Origin", "*");
+    // res.setHeader("Access-Control-Allow-Credentials", "true");
+    // res.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+    // res.setHeader("Access-Control-Allow-Headers", '*');
 
     console.log(res.header())
 
@@ -34,13 +39,20 @@ app.all('*', function (req, res, next) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
         }
-        request({ url: targetURL + req.url + '/', method: req.method, json: req.body, headers: {'Authorization': req.header('Authorization')} },
-            function (error, response, body) {
-                if (error) {
-                    console.error('error: ' + response.statusCode)
-                }
-            //    console.log(body);
-            }).pipe(res);
+        console.log('URL Debug:')
+        console.log(targetURL)
+        console.log(req.url)
+        fetch(`${targetURL + req.url}/`, {
+            'method': req.method
+        }).then( async (response) => {
+            const waitRes = await response.json()
+            console.log(waitRes)
+            
+            res.send(waitRes)
+        })
+        .catch(err => {
+            console.error(err);
+        })
     }
 });
 
