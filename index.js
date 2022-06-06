@@ -21,7 +21,7 @@ app.all('*', function (req, res, next) {
     res.header("access-control-allow-headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept');
     res.header("access-control-allow-origin", "*");
     res.header('access-control-allow-credentials', 'true')
-    res.header("access-control-allow-headers", 'Target-URL, access-control-allow-headers, access-control-request-headers');
+    res.header("access-control-allow-headers", 'Target-URL');
 
     // res.setHeader("Access-Control-Allow-Origin", "*");
     // res.setHeader("Access-Control-Allow-Credentials", "true");
