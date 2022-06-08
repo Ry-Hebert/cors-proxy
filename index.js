@@ -18,10 +18,9 @@ app.all('*', function (req, res, next) {
 
     // Set CORS headers: allow all origins, methods, and headers: you may want to lock this down in a production environment
     res.header("access-control-allow-methods", "GET, PUT, PATCH, POST, DELETE");
-    res.header("access-control-allow-headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept');
-    res.header("access-control-allow-origin", "*");
+    res.header("access-control-allow-headers", 'X-Requested-With, Content-Type, Authorization, Origin, Accept, Target-URL, Keep-Alive, Connection, Date, ETag, Content-Length');
+    res.header("access-control-allow-origin", '*');
     res.header('access-control-allow-credentials', 'true')
-    res.header("access-control-allow-headers", 'Target-URL');
 
     // res.setHeader("Access-Control-Allow-Origin", "*");
     // res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -39,9 +38,9 @@ app.all('*', function (req, res, next) {
             res.send(500, { error: 'There is no Target-Endpoint header in the request' });
             return;
         }
-        console.log('URL Debug:')
-        console.log(targetURL)
-        console.log(req.url)
+        // console.log('URL Debug:')
+        // console.log(targetURL)
+        // console.log(req.url)
         fetch(`${targetURL + req.url}/`, {
             'method': req.method
         }).then( async (response) => {
